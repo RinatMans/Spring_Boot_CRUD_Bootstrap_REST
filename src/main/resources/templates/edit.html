@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+</head>
+<body>
+<h1>Редактирование пользователя</h1>
+
+<div>
+    <form th:method="POST" th:action="@{/edit/{id}(id=${user.getId()})}" th:object="${user}">
+        <table>
+            <tr>
+                <td>
+                    <label for="id">ID</label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{id}" id="id" readonly><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="name">Имя</label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{name}" id="name"><br/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="password">Пароль</label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{password}" id="password"><br/>
+                </td>
+            </tr>
+        </table>
+        <br/>
+
+        <label for="Roles" th:each="role:${AllRoles}">Роли:
+            <input type="checkbox" id="Roles" th:field="*{roles}"
+                   th:text="${role.role}"   th:value="${role.role}" class="m-2"/>
+        </label>
+        <br/>
+        <input type="submit" value="Применить изменения">
+    </form>
+
+</div>
+
+</body>
+</html>

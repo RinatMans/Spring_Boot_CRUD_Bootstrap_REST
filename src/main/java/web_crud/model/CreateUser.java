@@ -40,12 +40,18 @@ public class CreateUser {
         roleSet.add(roleAdmin);
         roleSet.add(roleUser);
 
-        admin.setRoles(Collections.singleton(roleAdmin));
+        admin.setRoles(roleSet);
         admin.setName("admin");
+        admin.setLastName("admin");
+        admin.setEmail("admin@mail.ru");
+        admin.setAge(36);
         admin.setPassword("admin");
 
         user.setRoles(Collections.singleton(roleUser));
         user.setName("user");
+        user.setLastName("user");
+        user.setEmail("user@mail.ru");
+        user.setAge(34);
         user.setPassword("user");
 
         userService.saveNewUser(admin);

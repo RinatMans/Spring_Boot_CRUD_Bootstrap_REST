@@ -5,72 +5,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
-    <style type="text/css">
-        .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-color: #ccc;
-        }
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        .tg td {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #fff;
+    <style>
+        .leftstr, .rightstr {
+            float: left; /* Обтекание справа */
+            width: 50%; /* Ширина текстового блока */
+            color: white;
+            font-size: 14pt;
         }
+        .rightstr {
+            text-align: right; /* Выравнивание по правому краю */
+            color: #949da0;
 
-        .tg th {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 10px 5px;
-            border-style: solid;
-            border-width: 1px;
-            overflow: hidden;
-            word-break: normal;
-            border-color: #ccc;
-            color: #333;
-            background-color: #f0f0f0;
-        }
-
-        .tg .tg-4eph {
-            background-color: #f9f9f9
         }
     </style>
+
 </head>
-<body>
+<body style="background: #f8f9fa">
+<div class="container-fluid" style="background: #343a40; vertical-align: center; height: 40px" th:object="${user}">
+    <div class="row" style="font-size: 14pt;">
+        <div class="col-6" style="text-align: left; color: white; margin: 5px auto;">
+            <text style="font-weight: bold;" th:text="${user.getEmail()}"/>
+            with roles:
+            <text th:text="${user.getRoles()}"/>
+        </div>
+        <div class="col-6" style="text-align: right; margin: 5px auto; color: #949da0;">
+            <a th:href="@{/logout}"th:text="Logout">Logout</a>
+        </div>
+    </div>
+</div>
+<div>
 
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logout"/>
-</form>
-<br/>
-
-<div class="row" th:if="${#request.isUserInRole('ADMIN')}">
+</div>
+<div class="row" th:if="${#request.isUserInRole('ROLE_ADMIN')}">
     <form th:action="@{/admin}">
         <input type="submit" value="Админка"/>
     </form>
 </div>
 
 <br/>
-<table border="1">
-    <tr>
+<table class="table table-striped">
+    <thead>
+    <tr align="center">
         <th width="80">ID</th>
-        <th width="120">Имя</th>
+        <th width="120">FirstName</th>
+        <th width="120">LastNAme</th>
+        <th width="200">Email</th>
+        <th width="80">Age</th>
         <th width="450">Пароль</th>
-        <th width="60">role</th>
+        <th width="60">Role</th>
     </tr>
-    <tr th:object="${user}">
-        <td align="center" th:text="${user.getId()}"></td>
-        <td align="center" th:text="${user.getName()}"></td>
+    </thead>
+    <tbody>
+    <tr align="center" th:object="${user}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getName()}"></td>
+        <td th:text="${user.getLastName()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.getAge()}"></td>
         <td th:text="${user.getPassword()}"></td>
         <td th:text="${user.roles}"></td>
     </tr>
+    </tbody>
 </table>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 </html>

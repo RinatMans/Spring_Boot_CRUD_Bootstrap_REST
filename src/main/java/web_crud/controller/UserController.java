@@ -11,7 +11,7 @@ import web_crud.model.User;
 import web_crud.service.UserService;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasAnyRole('USER')")
 public class UserController {
 
     private final UserService userService;

@@ -16,8 +16,17 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "firstName")
     private String name; // уникальное значение
+
+    @Column(name = "lastName")
+    private String lastName;
+
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -44,6 +53,22 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLastName() {return lastName;}
+
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public int getAge() {return age; }
+
+    public void setAge(int age) { this.age = age;}
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMyPassword() {

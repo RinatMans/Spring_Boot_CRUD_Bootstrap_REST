@@ -23,10 +23,8 @@ public class UserController {
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public String getUserInfo(Authentication authentication, Model model) {
+
         User user = userService.findByUserName(authentication.getName());
-
-            System.out.println(authentication.getName());
-
         model.addAttribute("user", user);
 
         return "user";

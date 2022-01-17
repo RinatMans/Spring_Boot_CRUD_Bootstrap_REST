@@ -5,7 +5,6 @@ import web_crud.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -21,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getUsersList() {
-        return entityManager.createQuery("select distinct user from   User user  join fetch user.roles ", User.class).getResultList();
+        return entityManager.createQuery("select distinct user from User user join fetch user.roles ", User.class).getResultList();
     }
 
 
@@ -34,15 +33,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void updateUser(User user) {
         user.setId(user.getId());
-        user.setName(user.getName());
+        user.setFirstname(user.getFirstname());
+        user.setLastName(user.getLastName());
+        user.setAge(user.getAge());
+        user.setEmail(user.getEmail());
         user.setPassword(user.getPassword());
         user.setRoles(user.getRoles());
 
         entityManager.merge(user);
-//        User userNew = entityManager.getReference(User.class, id);
-//        userNew.setName(user.getName());
-//        user.setPassword(user.getPassword());
-//        user.setRoles(user.getRoles());
     }
 
 
@@ -52,12 +50,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByUserName(String username) {
-        TypedQuery<User> q = entityManager.createQuery(
-                "select  distinct user from User user join fetch user.roles where  user.name =:ParamUsername", User.class);
-        q.setParameter("ParamUsername", username);
-        return q.getResultList().stream().findAny().orElse(null);
-    }
+    public User findByEmail(String email) {
+        return (User) entityManager.createQuery("select user from User user join fetch user.roles where user.email=:email")
+                .setParameter("email", email).getSingleResult();
+        }
+
 
 }
 

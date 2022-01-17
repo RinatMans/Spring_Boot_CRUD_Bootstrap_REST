@@ -16,8 +16,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "firstName")
-    private String name; // уникальное значение
+    @Column(name = "firstname")
+    private String firstname; // уникальное значение
 
     @Column(name = "lastName")
     private String lastName;
@@ -47,12 +47,12 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastName() {return lastName;}
@@ -63,9 +63,7 @@ public class User implements UserDetails {
 
     public void setAge(int age) { this.age = age;}
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() {return email;}
 
     public void setEmail(String email) {
         this.email = email;
@@ -107,7 +105,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return getName();
+        return getFirstname();
     }
 
     @Override

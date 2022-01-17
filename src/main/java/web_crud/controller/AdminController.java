@@ -2,19 +2,18 @@ package web_crud.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import web_crud.model.Role;
 import web_crud.model.User;
 import web_crud.service.RoleService;
 import web_crud.service.UserService;
 
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Controller
+@RequestMapping("/admin")
 @PreAuthorize("hasAnyRole('ADMIN')")
 public class AdminController {
 
@@ -28,14 +27,14 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin")
-    public String getUserList(Authentication authentication, Model model) {
-        User user = userService.findByUserName(authentication.getName());
+    @GetMapping()
+    public String index(@AuthenticationPrincipal User user, Model model) {
+        //User userLogin = userService.findByEmail(authentication.getName());
 
         model.addAttribute("user", userService.getUsersList());
         model.addAttribute("AllRoles", roleService.getAllRoles());
         model.addAttribute("userLogin", user);
-        model.addAttribute("user2", new User());
+        //model.addAttribute("user2", new User());
         return "admin";
     }
 
@@ -47,39 +46,30 @@ public class AdminController {
     }
 
     @PostMapping("/edit/{id}")
-    public String update(@ModelAttribute("user") User user) {//
-        Set<Role> roleSet = new HashSet<>();
-        for (Role role : user.getRoles()) {
-            Role role2 = roleService.findRoleByRoleName(role.getRole());
-            roleSet.add(role2);
-        }
-        user.setRoles(roleSet);
+    public String update(@ModelAttribute("user") User user,
+                         @RequestParam(value = "newRoles") String [] nameRoles,
+                         @PathVariable(value = "id") long id) {
+        user.setRoles(roleService.getSetOfRoles(nameRoles));
         userService.updateUser(user);
-
+        System.out.println(user.getFirstname()+" "+user.getEmail()+" "+user.getRoles());
         return "redirect:/admin";
     }
 
-    @GetMapping("/CreateNewUser")
-    public String newUser(User user, Model model) { //@ModelAttribute("user2")
-        model.addAttribute("user2", user);
+    @GetMapping("/new")
+    public String newUser(User user, Model model) {
+        model.addAttribute("user2", new User());
         model.addAttribute("AllRoles", roleService.getAllRoles());
-        return "CreateNewUser";
+        return "new";
     }
 
-    @PostMapping("/CreateNewUser")
-    public String create(User user, Model model) {//@ModelAttribute("user2")
-        model.addAttribute("user2", user);
-        Set<Role> roleSet = new HashSet<>();
-        for (Role r : user.getRoles()) {
-            Role role = roleService.findRoleByRoleName(r.getRole());
-            roleSet.add(role);
-        }
-        user.setRoles(roleSet);
+    @PostMapping
+    public String create(@ModelAttribute("user") User user, @RequestParam(value = "newRoles") String [] newRoles) {
+        user.setRoles(roleService.getSetOfRoles(newRoles));
         userService.saveNewUser(user);
         return "redirect:/admin";
     }
 
-    @RequestMapping(value = "/remove/{id}")
+    @PostMapping(value = "/remove/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";

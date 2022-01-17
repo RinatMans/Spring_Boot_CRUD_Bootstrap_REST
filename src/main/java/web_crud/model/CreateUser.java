@@ -30,8 +30,8 @@ public class CreateUser {
         User user = new User();
         User admin = new User();
 
-        Role roleUser = new Role("ROLE_USER");
-        Role roleAdmin = new Role("ROLE_ADMIN");
+        Role roleUser = new Role("USER");
+        Role roleAdmin = new Role("ADMIN");
 
         roleService.saveRole(roleAdmin);
         roleService.saveRole(roleUser);
@@ -41,14 +41,14 @@ public class CreateUser {
         roleSet.add(roleUser);
 
         admin.setRoles(roleSet);
-        admin.setName("admin");
+        admin.setFirstname("admin");
         admin.setLastName("admin");
         admin.setEmail("admin@mail.ru");
         admin.setAge(36);
         admin.setPassword("admin");
 
         user.setRoles(Collections.singleton(roleUser));
-        user.setName("user");
+        user.setFirstname("user");
         user.setLastName("user");
         user.setEmail("user@mail.ru");
         user.setAge(34);

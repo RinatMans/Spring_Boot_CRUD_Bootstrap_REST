@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import web_crud.dao.RoleDao;
 import web_crud.model.Role;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -32,7 +33,13 @@ public class RoleServiceImp implements RoleService{
 
     @Transactional
     @Override
-    public Role findRoleByRoleName(String RoleName) {
-        return this.roleDao.findRoleByRoleName(RoleName);
+    public HashSet<Role> getSetOfRoles(String[] roleNames) {
+        return roleDao.getSetOfRoles(roleNames);
+    }
+
+    @Transactional
+    @Override
+    public Role findRoleByRoleName(String roleNames) {
+        return this.roleDao.findRoleByRoleName(roleNames);
     }
 }

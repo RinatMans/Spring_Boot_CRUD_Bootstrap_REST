@@ -54,8 +54,7 @@ public class UserServiceImp implements UserService{
 
     @Transactional
     @Override
-    public User findByUserName(String name) {
-        return userDao.findByUserName(name);
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
-
 }

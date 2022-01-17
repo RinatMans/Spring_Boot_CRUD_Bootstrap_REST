@@ -3,6 +3,7 @@ package web_crud.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,9 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
-    public String getUserInfo(Authentication authentication, Model model) {
-
-        User user = userService.findByUserName(authentication.getName());
+    public String getUserInfo(@AuthenticationPrincipal User user, Model model) {
+       // model.addAttribute("roles", user.getRoles());
         model.addAttribute("user", user);
-
         return "user";
     }
 

@@ -23,9 +23,10 @@ public class UserServiceImp implements UserService{
 
     @Transactional
     @Override
-    public void saveNewUser(User user) {
+    public User saveNewUser(User user) {
         user.setPassword(bcryptPasswordEncoder.encode(user.getPassword()));
         userDao.saveNewUser(user);
+        return user;
     }
 
     @Transactional
@@ -42,8 +43,9 @@ public class UserServiceImp implements UserService{
 
     @Transactional
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         this.userDao.updateUser(user);
+        return user;
     }
 
     @Transactional

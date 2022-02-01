@@ -42,14 +42,14 @@ public class CreateUser {
 
         admin.setRoles(roleSet);
         admin.setFirstname("admin");
-        admin.setLastName("admin");
+        admin.setLastname("admin");
         admin.setEmail("admin@mail.ru");
         admin.setAge(36);
         admin.setPassword("admin");
 
         user.setRoles(Collections.singleton(roleUser));
         user.setFirstname("user");
-        user.setLastName("user");
+        user.setLastname("user");
         user.setEmail("user@mail.ru");
         user.setAge(34);
         user.setPassword("user");

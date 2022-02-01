@@ -31,14 +31,14 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void updateUser(User user) {
-        user.setId(user.getId());
-        user.setFirstname(user.getFirstname());
-        user.setLastName(user.getLastName());
-        user.setAge(user.getAge());
-        user.setEmail(user.getEmail());
-        user.setPassword(user.getPassword());
-        user.setRoles(user.getRoles());
+    public void updateUser(Long id, User userUpdate) {
+        User user = findById(id);
+        user.setFirstname(userUpdate.getFirstname());
+        user.setLastname(userUpdate.getLastname());
+        user.setAge(userUpdate.getAge());
+        user.setEmail(userUpdate.getEmail());
+        user.setPassword(userUpdate.getPassword());
+        user.setRoles(userUpdate.getRoles());
 
         entityManager.merge(user);
     }

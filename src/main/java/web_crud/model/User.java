@@ -20,7 +20,7 @@ public class User implements UserDetails {
     private String firstname; // уникальное значение
 
     @Column(name = "lastName")
-    private String lastName;
+    private String lastname;
 
     @Column(name = "age")
     private int age;
@@ -55,9 +55,9 @@ public class User implements UserDetails {
         this.firstname = firstname;
     }
 
-    public String getLastName() {return lastName;}
+    public String getLastname() {return lastname;}
 
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setLastname(String lastname) { this.lastname = lastname; }
 
     public int getAge() {return age; }
 

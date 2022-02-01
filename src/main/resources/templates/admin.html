@@ -64,62 +64,54 @@
                             </tr>
                             </thead>
                             <tbody id="userTable"></tbody>
-<!--                            <button type="submit" class="btn btn-info" data-toggle="modal" data-target="#edit"-->
-<!--                                            th:attr="data-target='#edit' + ${user.getId()}">Edit-->
-<!--                            </button>-->
-<!--                            -->
-<!--                            <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#remove"-->
-<!--                                            th:attr="data-target='#remove' + ${user.getId()}">Delete-->
-<!--                            </button>-->
-
                         </table>
                     </div>
 
                     <!-- страница создания нового пользователя-->
-                    <div class="tab-pane bg-white" id="newUser">
+                    <div class="tab-pane bg-white" id="newUser" aria-labelledby="newUserActive">
                         <h5 class="p-2 pl-3 m-0 rounded bg-light">Add new user</h5>
                         <div class="row pt-3 pb-3">
                             <div class="col-md-4 mx-auto col text-center">
-                                <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+                                <form id="newUserForm">
                                     <div class="form-group text-center font-weight-bold">
-                                        <label for="firstname">First name</label>
-                                        <input type="text" class="form-control form-control-sm" id="firstname"
-                                               name="firstname" placeholder="First name">
+                                        <label for="newFirstname">First name</label>
+                                        <input type="text" class="form-control form-control-sm" id="newFirstname"
+                                               name="firstname" placeholder="First name" required>
 
-                                        <label for="lastName">Last name</label>
-                                        <input type="text" class="form-control form-control-sm" id="lastName"
-                                               name="lastName" placeholder="Last name">
+                                        <label for="newLastname">Last name</label>
+                                        <input type="text" class="form-control form-control-sm" id="newLastname"
+                                               name="lastname" placeholder="Last name" required>
 
-                                        <label for="age">Age</label>
-                                        <input type="number" class="form-control form-control-sm" id="age" name="age"
-                                               placeholder="Age">
+                                        <label for="newAge">Age</label>
+                                        <input type="number" class="form-control form-control-sm" id="newAge"
+                                               name="age"placeholder="Age" required>
 
-                                        <label for="email">Email address</label>
-                                        <input type="email" class="form-control form-control-sm" id="email" name="email"
-                                               placeholder="Enter email">
+                                        <label for="newEmail">Email address</label>
+                                        <input type="email" class="form-control form-control-sm" id="newEmail"
+                                               name="email" placeholder="Enter email" required>
 
-                                        <label for="password">Password</label>
-                                        <input type="password" class="form-control form-control-sm" id="password"
-                                               name="password" placeholder="Password">
+                                        <label for="newPassword">Password</label>
+                                        <input type="password" class="form-control form-control-sm" id="newPassword"
+                                               name="password" placeholder="Password" required>
 
                                         <br>
                                         <label>Role
-                                            <select class="form-control form-control-sm"
-                                                    size="2" name="newRoles" multiple="multiple" required>
+                                            <select  id="newRole" class="form-control form-control-sm"
+                                                    size="2" name="roles" multiple="multiple" required>
                                                 <option th:each="role : ${AllRoles}" th:value="${role.role}"
                                                         th:text="${role.role}"
                                                         th:selected="${role.role} == USER"></option>
                                             </select>
                                         </label>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Add new user</button>
+                                    <button type="submit" class="btn btn-primary" onclick="newUser()">Add new user</button>
                                 </form>
                             </div>
                         </div>
                     </div>
 
                     <!-- страница редактирования пользователя-->
-                    <div class="modal fade" id="edit" tabindex="-1"
+                    <div class="modal fade" id="editModal" tabindex="-1"
                          aria-labelledby="modalLabel" aria-hidden="true" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -127,7 +119,7 @@
                                     <h5 class="modal-title" id="modalLabel">Edit user</h5>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                        <span aria-hidden="true">x</span>
                                     </button>
                                 </div>
 
@@ -141,39 +133,40 @@
                                                            class="form-control form-control-sm" id="editID"
                                                            name="id" readonly/>
 
-                                                    <label for="firstnameNew">First name</label>
+                                                    <label for="editFirstname">First name</label>
                                                     <input type="text"
                                                            class="form-control form-control-sm"
-                                                           id="firstnameNew"
+                                                           id="editFirstname"
                                                            name="firstname">
 
-                                                    <label for="lastNameNew">Last name</label>
+                                                    <label for="editLastname">Last name</label>
                                                     <input type="text"
                                                            class="form-control form-control-sm"
-                                                           id="lastNameNew"
-                                                           name="lastName">
+                                                           id="editLastname"
+                                                           name="lastname">
 
-                                                    <label for="ageNew">Age</label>
+                                                    <label for="editAge">Age</label>
                                                     <input type="number"
-                                                           class="form-control form-control-sm" id="ageNew"
+                                                           class="form-control form-control-sm"
+                                                           id="editAge"
                                                            name="age">
 
-                                                    <label for="emailNew">Email address</label>
+                                                    <label for="editEmail">Email address</label>
                                                     <input type="email"
                                                            class="form-control form-control-sm"
-                                                           id="emailNew"
+                                                           id="editEmail"
                                                            name="email">
 
-                                                    <label for="passwordNew">Password</label>
+                                                    <label for="editPassword">Password</label>
                                                     <input type="password"
                                                            class="form-control form-control-sm"
-                                                           id="passwordNew"
+                                                           id="editPassword"
                                                            name="password">
 
                                                     <br>
                                                     <label>Role
-                                                        <select class="form-control form-control-sm"
-                                                                size="2" name="newRoles"
+                                                        <select id="editRole" lass="form-control form-control-sm"
+                                                                size="2" name="roles"
                                                                 multiple="multiple" required>
                                                             <option th:each="role : ${AllRoles}"
                                                                     th:value="${role.role}"
@@ -190,14 +183,14 @@
                                     <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary"
-                                            onclick="updateUser()">Edit</button>
+                                            onclick="editUser()">Edit</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- страница удаления пользователя-->
-                    <div class="modal fade" id="delete" tabindex="-1"
+                    <div class="modal fade" id="deleteModal" tabindex="-1"
                          aria-labelledby="modalLabel" aria-hidden="true" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -205,7 +198,7 @@
                                     <h5 class="modal-title" id="modalLabel">Delete user</h5>
                                     <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                        <span aria-hidden="true">x</span>
                                     </button>
                                 </div>
 
@@ -226,11 +219,11 @@
                                                            name="firstname"
                                                            readonly>
 
-                                                    <label for="deleteLastName">Last name</label>
+                                                    <label for="deleteLastname">Last name</label>
                                                     <input type="text"
                                                            class="form-control form-control-sm"
-                                                           id="deleteLastName"
-                                                           name="lastName"
+                                                           id="deleteLastname"
+                                                           name="lastname"
                                                            readonly>
 
                                                     <label for="deleteAge">Age</label>

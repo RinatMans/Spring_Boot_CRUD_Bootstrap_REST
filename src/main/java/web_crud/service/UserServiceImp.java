@@ -43,8 +43,8 @@ public class UserServiceImp implements UserService{
 
     @Transactional
     @Override
-    public User updateUser(User user) {
-        this.userDao.updateUser(user);
+    public User updateUser(Long id, User user) {
+        this.userDao.updateUser(id, user);
         return user;
     }
 

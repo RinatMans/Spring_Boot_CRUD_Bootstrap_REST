@@ -40,9 +40,9 @@ public class RestAdminController {
         return userService.saveNewUser(userNew);
     }
 
-    @PatchMapping("/users")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    @PatchMapping("/users/{id}")
+    public User updateUser(@RequestBody User user, @PathVariable("id") Long id) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping(value = "/users/{id}")
